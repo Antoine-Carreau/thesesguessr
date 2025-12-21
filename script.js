@@ -1,64 +1,7 @@
-let correctYear = 0;
-const loadBtn = document.getElementById('load-btn');
-const checkBtn = document.getElementById('check-btn');
-const gameArea = document.getElementById('game-area');
-const feedback = document.getElementById('feedback');
-const abstractText = document.getElementById('abstract-text');
-const guessInput = document.getElementById('guess-input');
-
-// On utilise un proxy pour éviter l'erreur de connexion (CORS)
-const PROXY_URL = "https://api.allorigins.win/get?url=";
-
-loadBtn.onclick = async () => {
-    loadBtn.innerText = "Recherche en cours...";
-    loadBtn.disabled = true;
-    feedback.innerText = "";
-    guessInput.value = "";
-    gameArea.classList.add('hidden');
-    
-    try {
-        const randomStart = Math.floor(Math.random() * 2000);
-        // On demande l'URL via le proxy
-        const targetUrl = `https://theses.fr/api/v1/theses/recherche/?q=resumes.fr:*&nombre=1&debut=${randomStart}`;
-        
-        const response = await fetch(PROXY_URL + encodeURIComponent(targetUrl));
-        const dataProxy = await response.json();
-        
-        // Les données réelles sont dans dataProxy.contents (format texte JSON)
-        const data = JSON.parse(dataProxy.contents);
-        const thesis = data.items[0];
-
-        if (thesis && thesis.resumes && thesis.resumes[0]) {
-            correctYear = parseInt(thesis.dateSoutenance.split('-')[0]);
-            abstractText.innerText = thesis.resumes[0].texte;
-            gameArea.classList.remove('hidden');
-        } else {
-            throw new Error("Données incomplètes");
-        }
-
-    } catch (e) {
-        console.error(e);
-        alert("Erreur de connexion à l'API via le proxy. Réessaie !");
-    } finally {
-        loadBtn.innerText = "Autre thèse au hasard";
-        loadBtn.disabled = false;
-    }
-};
-
-checkBtn.onclick = () => {
-    const userGuess = parseInt(guessInput.value);
-    if (isNaN(userGuess)) return;
-
-    const diff = Math.abs(userGuess - correctYear);
-
-    if (diff === 0) {
-        feedback.innerHTML = "🏆 Bravo ! C'est l'année exacte.";
-        feedback.style.color = "green";
-    } else if (diff <= 2) {
-        feedback.innerHTML = `🔥 Très proche ! C'était en ${correctYear}.`;
-        feedback.style.color = "orange";
-    } else {
-        feedback.innerHTML = `❄️ Froid ! C'était en ${correctYear}.`;
-        feedback.style.color = "red";
-    }
-};
+body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 20px; }
+.card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 600px; text-align: center; }
+.abstract { text-align: justify; background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0; font-style: italic; border-left: 4px solid #003366; }
+input { padding: 10px; width: 80px; border: 1px solid #ccc; border-radius: 4px; }
+#load-btn { background: #003366; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; margin-bottom: 10px; }
+#check-btn { background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+#feedback { margin-top: 1rem; font-weight: bold; font-size: 1.1rem; }
