@@ -2,23 +2,66 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Devine la Thèse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThesesGuessr Pro - Giga Data</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="card">
-        <h1>🎓 L'Abstract Mystère</h1>
-        <button id="load-btn">Charger une thèse au hasard</button>
-        <div id="game-area" style="display:none;">
-            <div id="abstract-text" class="abstract"></div>
-            <div class="guess-zone">
-                <input type="number" id="guess-input" placeholder="Année ?">
-                <button id="check-btn">Vérifier</button>
+    <div class="game-container">
+        <div id="loader" class="overlay">
+            <div class="loader-content">
+                <h1>🎓 ThesesGuessr</h1>
+                <p>Initialisation de la base de données...</p>
+                <div class="spinner"></div>
             </div>
-            <div id="feedback"></div>
+        </div>
+
+        <header>
+            <div class="round-counter">Round <span id="current-round">1</span> / <span id="total-rounds">5</span></div>
+            <div class="total-score">Score Total: <span id="score-val">0</span></div>
+        </header>
+
+        <main id="game-ui" class="hidden">
+            <section class="abstract-section">
+                <div class="abstract-card">
+                    <h3>Résumé de la thèse</h3>
+                    <div id="abstract-text" class="scroll-box"></div>
+                </div>
+            </section>
+
+            <section class="input-section">
+                <div class="input-card">
+                    <h3>📅 Année de soutenance : <span id="year-display">2000</span></h3>
+                    <input type="range" id="year-slider" min="1900" max="2025" value="2000">
+                </div>
+
+                <div class="input-card">
+                    <h3>🏫 École Doctorale</h3>
+                    <div id="ed-grid" class="grid-qcm"></div>
+                </div>
+
+                <div class="input-card">
+                    <h3>🔑 Mots-clés (sélectionne les bons)</h3>
+                    <div id="kw-grid" class="grid-kw"></div>
+                </div>
+
+                <div class="meta-info">
+                    <span>📄 <span id="page-count">?</span> pages</span>
+                    <span>📚 <span id="ref-count">?</span> références (est.)</span>
+                </div>
+
+                <button id="validate-btn" class="btn-primary">VALIDER</button>
+                <button id="next-btn" class="btn-primary hidden">CONTINUER ➔</button>
+            </section>
+        </main>
+
+        <div id="result-overlay" class="hidden">
+            <div class="result-card">
+                <h2 id="round-points">+ 0 pts</h2>
+                <div id="correction-details"></div>
+            </div>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
-
