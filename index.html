@@ -2,23 +2,18 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeu : Devine l'Année de la Thèse</title>
+    <title>Devine la Thèse</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
     <div class="card">
-        <h1>🎓 Devine l'Année</h1>
-        <p>Analyse le résumé pour trouver l'année de soutenance.</p>
-        
+        <h1>🎓 L'Abstract Mystère</h1>
         <button id="load-btn">Charger une thèse au hasard</button>
-
-        <div id="game-area" class="hidden">
-            <div class="abstract" id="abstract-text"></div>
-            
-            <div class="input-group">
-                <input type="number" id="guess-input" placeholder="Ex: 2018">
+        <div id="game-area" style="display:none;">
+            <div id="abstract-text" class="abstract"></div>
+            <div class="guess-zone">
+                <input type="number" id="guess-input" placeholder="Année ?">
                 <button id="check-btn">Vérifier</button>
             </div>
             <div id="feedback"></div>
