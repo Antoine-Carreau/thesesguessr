@@ -2,56 +2,83 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>The Guessing Game - Thèses</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThesesGuessr</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/> -->
+    <link rel="stylesheet" href="animate.min.css">
+    <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
-
     <div id="loader">
         <div class="spinner"></div>
-        <p>Chargement des thèses...</p>
+        <p>Chargement du savoir...</p>
     </div>
 
     <div id="game-ui" class="game-container hidden">
-        <header>
-            <div>Round <span id="round-num">1</span>/5</div>
-            <div>Score: <span id="score-total">0</span> pts</div>
-        </header>
+        <div class="left-panel">
+            <header>
+                <div class="round-tag">ROUND <span id="round-num">1</span>/5</div>
+                <div class="score-display">
+                    <div class="score-main">
+                        <span id="score-total">0</span><span class="score-max">/25000</span>
+                    </div>
+                    <div id="points-anim" class="points-popup"></div>
+                </div>
+            </header>
 
-        <div class="card">
-            <h3>Extrait de la thèse</h3>
-            <div id="abstract-text" class="abstract-box"></div>
-            <div class="stats">
-                <span>📄 <span id="page-count">?</span> pages</span> | 
-                <span>📚 ~<span id="ref-count">?</span> références</span>
+            <div class="card abstract-card animate__animated animate__fadeInLeft">
+                <div class="card-header">RÉSUMÉ DE LA THÈSE</div>
+                <div id="abstract-text" class="abstract-box"></div>
+            </div>
+
+            <div id="preview-container" class="preview-box hidden animate__animated animate__fadeIn">
+                <p>Informations de la thèse :</p>
+                <div id="theses-preview-content"></div>
             </div>
         </div>
 
-        <div class="input-zone">
-            <div class="card">
-                <h3>En quelle année a été soutenue cette thèse ?</h3>
-                <div class="slider-container">
-                    <input type="range" id="year-slider" min="1980" max="2024" value="2000">
-                    <div id="year-label" class="year-badge">2000</div>
+        <div class="right-panel">
+            <div class="card quiz-card">
+                <div class="question-block" id="block-year">
+                    <div class="label-row">
+                        <label>Année de soutenance <small>(max 2000 pts)</small></label>
+                        <div class="slider-inline">
+                            <input type="range" id="year-slider" min="1980" max="2025" value="2000">
+                            <div id="year-label" class="year-badge">2000</div>
+                        </div>
+                    </div>
+                    <div class="correction-inline" id="corr-year"></div>
+                </div>
+
+                <div class="question-block" id="block-discipline">
+                    <label>Discipline <small>(1000 pts)</small></label>
+                    <div id="discipline-grid" class="grid-qcm"></div>
+                    <div class="correction-inline" id="corr-discipline"></div>
+                </div>
+
+                <div class="question-block" id="block-etab">
+                    <label>Établissement <small>(1000 pts)</small></label>
+                    <div id="etab-grid" class="grid-qcm"></div>
+                    <div class="correction-inline" id="corr-etab"></div>
+                </div>
+
+                <div class="question-block" id="block-kw">
+                    <label>Mots-clés <small>(1000 pts)</small></label>
+                    <div id="kw-grid" class="grid-qcm"></div>
+                    <div class="correction-inline" id="corr-kw"></div>
+                </div>
+
+                <div class="actions">
+                    <button id="validate-btn" class="btn-primary">VALIDER MES RÉPONSES</button>
+                    <div class="post-valide-btns">
+                        <a id="link-theses" href="#" target="_blank" class="btn-link hidden">OUVRIR SUR THESES.FR 🔗</a>
+                        <button id="next-btn" class="btn-next hidden">ROUND SUIVANT ➔</button>
+                    </div>
                 </div>
             </div>
-
-            <div class="card">
-                <h3>Quelle est l'École Doctorale ?</h3>
-                <div id="ed-grid" class="grid"></div>
-            </div>
-
-            <div class="card">
-                <h3>Quels sont les mots-clés associés ? (Sélectionne les bons)</h3>
-                <div id="kw-grid" class="grid"></div>
-            </div>
-
-            <button id="validate-btn" class="btn-main">VALIDER MA RÉPONSE</button>
-            <div id="correction" class="hidden"></div>
-            <button id="next-btn" class="btn-main hidden">PASSER AU ROUND SUIVANT</button>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
